@@ -210,7 +210,12 @@
 
   /** Gera QR Code a partir de pix.copy_paste usando a lib qrcode (CDN) */
   async function renderQrCode(copyPaste) {
-    if (!qrCanvas || !copyPaste || typeof QRCode === "undefined") return;
+    if (!qrCanvas || !copyPaste) return;
+
+    if (typeof QRCode === "undefined") {
+      console.warn("Lib QRCode não carregou (CDN). O copia-e-cola ainda funciona.");
+      return false;
+    }
 
     try {
       await QRCode.toCanvas(qrCanvas, copyPaste, {
@@ -218,8 +223,10 @@
         margin: 2,
         color: { dark: "#000000", light: "#ffffff" },
       });
+      return true;
     } catch (err) {
       console.warn("Falha ao gerar QR:", err);
+      return false;
     }
   }
 
@@ -352,6 +359,10 @@
       const hidden = qrSection.classList.contains("hidden");
       qrSection.classList.toggle("hidden", !hidden);
       qrSection.setAttribute("aria-hidden", String(!hidden));
+      // Re-render ao abrir: cobre falha inicial da lib ou canvas ainda oculto
+      if (hidden && pixCodeEl?.value) {
+        void renderQrCode(pixCodeEl.value);
+      }
     });
 
     try {
