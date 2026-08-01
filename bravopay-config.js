@@ -6,9 +6,8 @@
  * UTMify não atribui corretamente ao anúncio.
  *
  * Prioridade do product_id na criação da transação:
- *   1. Campo "Product ID" no checkout (checkout.html)
- *   2. Valor salvo no localStorage (sessão anterior)
- *   3. BRAVOPAY_PRODUCT_ID abaixo (fallback fixo)
+ *   1. Valor salvo no checkout (estudo_checkout.productId)
+ *   2. BRAVOPAY_PRODUCT_ID abaixo (fallback fixo)
  */
 window.BRAVOPAY_CONFIG = {
   /** Cole o ID do produto BravoPay aqui, ex: "prod_abc123" */
