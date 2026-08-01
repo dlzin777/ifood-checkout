@@ -43,7 +43,6 @@
     nextStep: document.getElementById("checkout-next-step"),
     selectedShipping: document.getElementById("checkout-selected-shipping"),
     btnFinish: document.getElementById("btn-finish"),
-    productIdInput: document.getElementById("bravopay-product-id"),
     couponBanner: document.getElementById("coupon-banner"),
     headlineTitle: document.getElementById("checkout-headline-title"),
     toast: document.getElementById("toast"),
@@ -172,11 +171,6 @@
         }
       }
 
-      const configProductId = window.BRAVOPAY_CONFIG?.PRODUCT_ID || "";
-      const savedProductId = localStorage.getItem("bravopay_product_id") || configProductId;
-      if (els.productIdInput && !els.productIdInput.value && savedProductId) {
-        els.productIdInput.value = savedProductId;
-      }
     } catch (err) {
       console.warn("Falha ao carregar resumo:", err);
     }
@@ -334,14 +328,8 @@
         return;
       }
 
-      const productId = (els.productIdInput?.value || "").trim();
+      const productId = String(window.BRAVOPAY_CONFIG?.PRODUCT_ID || "").trim();
       try {
-        if (productId) {
-          localStorage.setItem("bravopay_product_id", productId);
-        } else {
-          localStorage.removeItem("bravopay_product_id");
-        }
-
         localStorage.setItem(
           "estudo_checkout",
           JSON.stringify({
