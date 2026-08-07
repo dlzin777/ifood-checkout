@@ -13,9 +13,9 @@
   };
 
   const BASE_FREIGHT = [
-    { id: "economico", name: "Envio Econômico iFood", price: 19.9, eta: "5 a 8 dias úteis" },
-    { id: "padrao", name: "Envio Padrão iFood", price: 25.9, eta: "3 a 5 dias úteis" },
-    { id: "expresso", name: "Envio Prioritário iFood", price: 29.9, eta: "1 a 3 dias úteis" },
+    { id: "economico", name: "Envio Econômico iFood", price: 22.9, eta: "5 a 8 dias úteis" },
+    { id: "padrao", name: "Envio Padrão iFood", price: 28.9, eta: "3 a 5 dias úteis" },
+    { id: "expresso", name: "Envio Prioritário iFood", price: 32.9, eta: "1 a 3 dias úteis" },
   ];
 
   const els = {

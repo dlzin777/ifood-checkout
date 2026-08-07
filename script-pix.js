@@ -70,11 +70,8 @@
     if (statusEl) statusEl.textContent = text;
   }
 
-  function startTimer(expiresAt) {
-    if (expiresAt) {
-      const diffMs = new Date(expiresAt).getTime() - Date.now();
-      remaining = Math.max(0, Math.floor(diffMs / 1000));
-    }
+  function startTimer() {
+    remaining = TOTAL_SECONDS;
 
     if (timerEl) timerEl.textContent = formatTime(remaining);
     if (progressBar) progressBar.style.width = "100%";
@@ -383,7 +380,7 @@
       setStatusLabel("Aguardando pagamento");
       showToast("PIX gerado. Copie o código ou escaneie o QR.", "success");
 
-      startTimer(transaction.pix.expires_at);
+      startTimer();
 
       if (pollIntervalId) clearInterval(pollIntervalId);
       pollIntervalId = setInterval(() => pollStatus(transaction.id), POLL_INTERVAL_MS);
