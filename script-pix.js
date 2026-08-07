@@ -377,6 +377,11 @@
         transaction.pix.copy_paste
       );
 
+      window.MetaPixel?.track("AddPaymentInfo", {
+        currency: "BRL",
+        value: checkoutData.amount,
+      });
+
       setStatusLabel("Aguardando pagamento");
       showToast("PIX gerado. Copie o código ou escaneie o QR.", "success");
 

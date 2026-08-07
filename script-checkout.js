@@ -347,6 +347,12 @@
         /* ignore */
       }
 
+      const checkoutTotal = selectedFreight.price + (reward.extra || 0);
+      window.MetaPixel?.track("InitiateCheckout", {
+        currency: "BRL",
+        value: checkoutTotal,
+      });
+
       showToast("Frete confirmado! Indo para o pagamento...", "success");
       setTimeout(() => {
         window.location.href = "pix.html";
