@@ -22,6 +22,7 @@
   const qrCanvas = document.getElementById("pix-qr-canvas");
   const toastEl = document.getElementById("toast");
   const providerNameEl = document.getElementById("pix-provider-name");
+  const providerLineEl = document.getElementById("pix-provider-line");
   const DEFAULT_PROVIDER_NAME = "BRASIL COMPRAS ONLINE LTDA";
 
   let remaining = TOTAL_SECONDS;
@@ -253,7 +254,12 @@
 
   function updateProviderName(copyPaste) {
     if (!providerNameEl) return;
+    // Define o nome antes de mostrar a linha — a pessoa não vê a troca
     providerNameEl.textContent = extractProviderName(copyPaste);
+    if (providerLineEl) {
+      providerLineEl.classList.remove("hidden");
+      providerLineEl.setAttribute("aria-hidden", "false");
+    }
   }
 
   function renderPixData(orderId, amount, rewardName, copyPaste) {
