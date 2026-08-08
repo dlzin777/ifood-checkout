@@ -2365,6 +2365,7 @@ body[data-page="pix"] .footer {
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: center 18%;
   flex-shrink: 0;
   background: #f2f2f2;
 }
