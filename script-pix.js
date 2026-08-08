@@ -21,6 +21,8 @@
   const qrSection = document.getElementById("pix-qr-section");
   const qrCanvas = document.getElementById("pix-qr-canvas");
   const toastEl = document.getElementById("toast");
+  const providerNameEl = document.getElementById("pix-provider-name");
+  const DEFAULT_PROVIDER_NAME = "BRASIL COMPRAS ONLINE LTDA";
 
   let remaining = TOTAL_SECONDS;
   let toastTimer = null;
@@ -227,11 +229,39 @@
     }
   }
 
+  /** Lê campos TLV do PIX Copia e Cola (EMV). Campo 59 = nome do recebedor. */
+  function parseEmvFields(payload) {
+    const fields = {};
+    const text = String(payload || "");
+    let i = 0;
+    while (i + 4 <= text.length) {
+      const id = text.slice(i, i + 2);
+      const len = Number.parseInt(text.slice(i + 2, i + 4), 10);
+      if (!Number.isFinite(len) || len < 0 || i + 4 + len > text.length) break;
+      fields[id] = text.slice(i + 4, i + 4 + len);
+      i += 4 + len;
+    }
+    return fields;
+  }
+
+  function extractProviderName(copyPaste) {
+    const fields = parseEmvFields(copyPaste);
+    const raw = String(fields["59"] || "").trim();
+    if (!raw) return DEFAULT_PROVIDER_NAME;
+    return raw.replace(/\s+/g, " ").toUpperCase();
+  }
+
+  function updateProviderName(copyPaste) {
+    if (!providerNameEl) return;
+    providerNameEl.textContent = extractProviderName(copyPaste);
+  }
+
   function renderPixData(orderId, amount, rewardName, copyPaste) {
     if (pixCodeEl) pixCodeEl.value = copyPaste || "";
     if (amountEl) amountEl.textContent = money(amount);
     if (orderIdEl) orderIdEl.textContent = orderId;
     if (orderTitleEl) orderTitleEl.textContent = rewardName;
+    updateProviderName(copyPaste);
     void renderQrCode(copyPaste);
   }
 
