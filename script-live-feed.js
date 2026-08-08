@@ -9,13 +9,13 @@
 
   // Cada entrada = 1 nome + 1 foto (únicos)
   const PEOPLE = [
-    { name: "Marcos Silva", img: "assets/feed-1.png" },
-    { name: "Ricardo Mendes", img: "assets/feed-2.png" },
-    { name: "Eduardo Costa", img: "assets/feed-3.png" },
-    { name: "Paulo Henrique", img: "assets/feed-4.png" },
-    { name: "Gabriel Almeida", img: "assets/feed-5.png" },
-    { name: "José Carlos", img: "assets/feed-6.png" },
-    { name: "André Souza", img: "assets/feed-7.png" },
+    { name: "Marcos Silva", img: "/assets/feed-1.png" },
+    { name: "Ricardo Mendes", img: "/assets/feed-2.png" },
+    { name: "Eduardo Costa", img: "/assets/feed-3.png" },
+    { name: "Paulo Henrique", img: "/assets/feed-4.png" },
+    { name: "Gabriel Almeida", img: "/assets/feed-5.png" },
+    { name: "José Carlos", img: "/assets/feed-6.png" },
+    { name: "André Souza", img: "/assets/feed-7.png" },
   ];
 
   const FALLBACK_CITIES = [
