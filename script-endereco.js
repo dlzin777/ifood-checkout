@@ -25,7 +25,7 @@
 
   const STOCK_KEY = "estudo_bag_stock";
   const STOCK_CITY_KEY = "estudo_bag_stock_city";
-  const INITIAL_STOCK = 3;
+  const INITIAL_STOCK = 6;
 
   let toastTimer = null;
   let lastAddress = null;
@@ -33,7 +33,7 @@
   function getStock() {
     try {
       const n = Number(sessionStorage.getItem(STOCK_KEY));
-      if (Number.isFinite(n) && n >= 1) return Math.min(3, Math.floor(n));
+      if (Number.isFinite(n) && n >= 1) return Math.min(6, Math.max(3, Math.floor(n)));
     } catch {
       /* ignore */
     }
@@ -41,7 +41,7 @@
   }
 
   function setStock(n, city) {
-    const value = Math.max(1, Math.min(3, Math.floor(Number(n) || INITIAL_STOCK)));
+    const value = Math.max(3, Math.min(6, Math.floor(Number(n) || INITIAL_STOCK)));
     try {
       sessionStorage.setItem(STOCK_KEY, String(value));
       if (city) sessionStorage.setItem(STOCK_CITY_KEY, city);
@@ -55,7 +55,7 @@
     const left = setStock(getStock() || INITIAL_STOCK, city || lastAddress?.city);
     if (stockLabel) {
       stockLabel.textContent =
-        left === 1 ? "Resta apenas 1 bag" : `Restam apenas ${left} bags`;
+        `Restam ${left} bags`;
     }
     return left;
   }

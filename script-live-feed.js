@@ -55,15 +55,16 @@
   function getStock() {
     try {
       const n = Number(sessionStorage.getItem(STOCK_KEY));
-      if (Number.isFinite(n) && n >= 1) return Math.min(3, Math.floor(n));
+      // Mínimo 3 / máximo 6 — evita pressão de "última 1 bag"
+      if (Number.isFinite(n) && n >= 1) return Math.min(6, Math.max(3, Math.floor(n)));
     } catch {
       /* ignore */
     }
-    return 3;
+    return 6;
   }
 
   function setStock(n) {
-    const value = Math.max(1, Math.min(3, Math.floor(Number(n) || 3)));
+    const value = Math.max(3, Math.min(6, Math.floor(Number(n) || 6)));
     try {
       sessionStorage.setItem(STOCK_KEY, String(value));
     } catch {
@@ -102,7 +103,7 @@
     const city = getCity();
 
     let left = getStock();
-    if (left > 1 && Math.random() < 0.55) {
+    if (left > 3 && Math.random() < 0.55) {
       left = setStock(left - 1);
     }
 
@@ -120,11 +121,8 @@
     const city = getCity();
     return {
       type: "stock",
-      title: left === 1 ? "Última bag nesta região!" : "Estoque quase no fim",
-      text:
-        left === 1
-          ? `Resta apenas 1 bag em ${city}. Garanta a sua agora.`
-          : `Restam apenas ${left} bags em ${city}. Garanta a sua agora.`,
+      title: "Poucas bags nesta região",
+      text: `Restam ${left} bags em ${city}. Garanta a sua agora.`,
       avatar: null,
     };
   }
@@ -177,7 +175,7 @@
     const page = document.body?.getAttribute("data-page");
     if (page !== "checkout" && page !== "pix") return;
 
-    if (!sessionStorage.getItem(STOCK_KEY)) setStock(3);
+    if (!sessionStorage.getItem(STOCK_KEY)) setStock(6);
 
     const host = ensureHost();
 
