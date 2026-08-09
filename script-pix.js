@@ -14,7 +14,6 @@
   const timerEl = document.getElementById("pix-timer");
   const progressBar = document.getElementById("pix-progress-bar");
   const amountEl = document.getElementById("pix-amount");
-  const amountTopEl = document.getElementById("pix-amount-top");
   const orderIdEl = document.getElementById("pix-order-id");
   const orderTitleEl = document.getElementById("pix-order-title");
   const orderImageEl = document.getElementById("pix-order-image");
@@ -24,8 +23,6 @@
   const toastEl = document.getElementById("toast");
   const providerNameEl = document.getElementById("pix-provider-name");
   const providerLineEl = document.getElementById("pix-provider-line");
-  const copyBtn = document.getElementById("btn-copy-pix");
-  const copyBtnSticky = document.getElementById("btn-copy-pix-sticky");
   const DEFAULT_PROVIDER_NAME = "BRASIL COMPRAS ONLINE LTDA";
 
   let remaining = TOTAL_SECONDS;
@@ -268,23 +265,10 @@
   function renderPixData(orderId, amount, rewardName, copyPaste) {
     if (pixCodeEl) pixCodeEl.value = copyPaste || "";
     if (amountEl) amountEl.textContent = money(amount);
-    if (amountTopEl) amountTopEl.textContent = money(amount);
     if (orderIdEl) orderIdEl.textContent = orderId;
     if (orderTitleEl) orderTitleEl.textContent = rewardName;
     updateProviderName(copyPaste);
     void renderQrCode(copyPaste);
-  }
-
-  function markCopiedUI() {
-    const label = "CÓDIGO COPIADO — ABRA SEU BANCO";
-    if (copyBtn) {
-      copyBtn.textContent = label;
-      copyBtn.classList.add("pix-copy-btn--done");
-    }
-    if (copyBtnSticky) {
-      copyBtnSticky.textContent = label;
-      copyBtnSticky.classList.add("pix-copy-btn--done");
-    }
   }
 
   async function copyCode() {
@@ -301,8 +285,7 @@
         pixCodeEl.select();
         document.execCommand("copy");
       }
-      markCopiedUI();
-      showToast("Código copiado! Abra o banco e cole no Pix Copia e Cola.", "success");
+      showToast("Código PIX copiado! Cole no app do seu banco.", "success");
     } catch {
       showToast("Copie manualmente o código acima.", "error");
     }
@@ -401,10 +384,8 @@
       orderImageEl.alt = rewardName;
     }
     if (amountEl) amountEl.textContent = money(checkoutData.amount);
-    if (amountTopEl) amountTopEl.textContent = money(checkoutData.amount);
 
     document.getElementById("btn-copy-pix")?.addEventListener("click", copyCode);
-    document.getElementById("btn-copy-pix-sticky")?.addEventListener("click", copyCode);
     document.getElementById("btn-copy-pix-icon")?.addEventListener("click", copyCode);
     document.getElementById("btn-show-pix-qr")?.addEventListener("click", () => {
       if (!qrSection) return;
