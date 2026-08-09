@@ -352,10 +352,6 @@
         currency: "BRL",
         value: checkoutTotal,
       });
-      window.TikTokPixel?.track("InitiateCheckout", {
-        currency: "BRL",
-        value: checkoutTotal,
-      });
 
       showToast("Frete confirmado! Indo para o pagamento...", "success");
       setTimeout(() => {
