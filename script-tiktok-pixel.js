@@ -67,9 +67,27 @@
   window.ttq.load(pixelId);
   window.ttq.page();
 
+  function withContentParams(params) {
+    const payload = { ...(params || {}) };
+    const value = payload.value;
+    payload.content_id = payload.content_id || "bag-ifood";
+    payload.content_type = payload.content_type || "product";
+    payload.content_name = payload.content_name || "Bag iFood";
+    payload.contents = payload.contents || [
+      {
+        content_id: payload.content_id,
+        content_type: payload.content_type,
+        content_name: payload.content_name,
+        quantity: 1,
+        price: value != null ? Number(value) : undefined,
+      },
+    ];
+    return payload;
+  }
+
   function track(event, params) {
     if (!window.ttq || typeof window.ttq.track !== "function") return;
-    window.ttq.track(event, params || {});
+    window.ttq.track(event, withContentParams(params));
   }
 
   function getCheckoutTotal() {
@@ -94,7 +112,9 @@
     const value = getCheckoutTotal();
     const params = { currency: "BRL" };
     if (value != null) params.value = value;
+    // CompletePayment = compra (TikTok); Purchase também ajuda no otimizador
     track("CompletePayment", params);
+    track("Purchase", params);
   }
 
   window.TikTokPixel = { track, getCheckoutTotal };
