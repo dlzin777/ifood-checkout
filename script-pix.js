@@ -417,6 +417,10 @@
         currency: "BRL",
         value: checkoutData.amount,
       });
+      window.TikTokPixel?.track("AddPaymentInfo", {
+        currency: "BRL",
+        value: checkoutData.amount,
+      });
 
       setStatusLabel("Aguardando pagamento");
       showToast("PIX gerado. Copie o código ou escaneie o QR.", "success");
